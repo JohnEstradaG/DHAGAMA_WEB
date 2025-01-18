@@ -1,0 +1,57 @@
+<div class="background-login" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem">
+  <div fxLayoutAlign="center center" fxLayout="row">
+    <mat-card class="size-card-login">
+      <div fxLayout="column" fxLayoutGap="1rem" class="card-login">
+        <div fxLayoutAlign="center center">
+          <h1 class="label-login">{{dictionaryUtils.labels.login}}</h1>
+        </div>
+        <form [formGroup]="loginFormGroup" fxLayout="column">
+          <mat-form-field appearance="outline" class="input-style">
+            <mat-label>{{dictionaryUtils.labels.email}}</mat-label>
+            <input matInput required name="email" type="text" formControlName="email">
+            <mat-icon matSuffix>email</mat-icon>
+            @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
+            <mat-error>
+              {{dictionaryUtils.labels.email}} <strong>{{dictionaryUtils.labels.invalid}}</strong>
+            </mat-error>
+            }
+            @if (emailFormControl.hasError('required')) {
+            <mat-error>
+              {{dictionaryUtils.labels.email}} <strong>{{dictionaryUtils.labels.required}}</strong>
+            </mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="input-style">
+            <mat-label>{{dictionaryUtils.labels.password}}</mat-label>
+            <input matInput required autocomplete="off" name="password" type="password" formControlName="password">
+            <mat-icon matSuffix>password</mat-icon>
+            @if (passwordFormControl.hasError('required')) {
+            <mat-error>
+              {{dictionaryUtils.labels.password}} <strong>{{dictionaryUtils.labels.required}}</strong>
+            </mat-error>
+            }
+          </mat-form-field>
+
+          <div fxLayout="column" fxLayoutGap="1rem">
+            <button mat-raised-button (click)="signIn()">
+              {{dictionaryUtils.labels.login}}
+            </button>
+
+          </div>
+
+          <div fxLayoutAlign="center center">
+            <p class="restore-password" routerLink="/olvido-contraseña">
+              {{dictionaryUtils.labels.didYouForgetYourPassword}}</p>
+          </div>
+        </form>
+      </div>
+    </mat-card>
+
+    <div fxLayout="column" fxLayoutGap="1rem" class="fixed-card">
+      <div fxLayoutAlign="center center">
+        <img src="../../../assets/img/logo.png" class="logo-login-style">
+      </div>
+    </div>
+  </div>
+</div>

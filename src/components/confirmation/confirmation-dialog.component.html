@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<mat-dialog-content>
+    <div fxLayout="column" fxLayoutGap="1rem">
+        <h4 class="subtitle-global">{{data.subtitle}}</h4>
+        @if (data.alert != undefined) {
+            <h3 class="alert-global">{{data.alert}}</h3>
+        }
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1rem">
+    @if (data.cancel !== false) {
+        <button mat-raised-button class="style-button-cancel"
+            (click)="dialogRef.close(false);">
+            {{data.title === dictionaryUtils.actions.cancel ? dictionaryUtils.actions.return :
+            dictionaryUtils.actions.cancel}}
+        </button>
+    }
+
+    <button mat-raised-button color="accent" (click)="dialogRef.close(true)">
+        {{ !data.cancel ? dictionaryUtils.actions.return : dictionaryUtils.actions.accept }}
+    </button>
+</mat-dialog-actions>
