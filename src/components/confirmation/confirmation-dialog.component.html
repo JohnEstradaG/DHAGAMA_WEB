@@ -7,16 +7,17 @@
         }
     </div>
 </mat-dialog-content>
-<mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="1rem">
+
+<mat-dialog-actions class="row space-between-center">
     @if (data.cancel !== false) {
-        <button mat-raised-button class="style-button-cancel"
+        <button mat-raised-button
             (click)="dialogRef.close(false);">
             {{data.title === dictionaryUtils.actions.cancel ? dictionaryUtils.actions.return :
             dictionaryUtils.actions.cancel}}
         </button>
     }
 
-    <button mat-raised-button color="accent" (click)="dialogRef.close(true)">
+    <button mat-flat-button (click)="dialogRef.close(true)">
         {{ !data.cancel ? dictionaryUtils.actions.return : dictionaryUtils.actions.accept }}
     </button>
 </mat-dialog-actions>

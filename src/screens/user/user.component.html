@@ -1,0 +1,81 @@
+<mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+<div class='container column'>
+  <form [formGroup]="searchFormGroup">
+
+    <div class='row space-between-center'>
+      <mat-form-field appearance='outline'>
+        <mat-label>{{dictionaryUtils.actions.searchUser}}</mat-label>
+        <input matInput type="text" formControlName="search" (keyup)="searchUser()" >
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+
+      <button mat-fab extended (click)='addOrEdit()'>
+        <mat-icon>add</mat-icon>
+        {{dictionaryUtils.labels.user}}
+      </button>
+    </div>
+  </form>
+
+  <table mat-table [dataSource]='users' class="mat-elevation-z8">
+
+    <ng-container matColumnDef='name'>
+      <th mat-header-cell *matHeaderCellDef>{{ dictionaryUtils.labels.name }}</th>
+      <td mat-cell *matCellDef='let element'>{{ element.data.name }} {{ element.data.firstName }}
+        {{element.data.lastName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef='phone'>
+      <th mat-header-cell *matHeaderCellDef>{{ dictionaryUtils.labels.phone }}</th>
+      <td mat-cell *matCellDef='let element'>{{ element.data.phone }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef='email'>
+      <th mat-header-cell *matHeaderCellDef>{{ dictionaryUtils.labels.email }}</th>
+      <td mat-cell *matCellDef='let element'>{{ element.data.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef='role'>
+      <th mat-header-cell *matHeaderCellDef>{{ dictionaryUtils.labels.role }}</th>
+      <td mat-cell *matCellDef='let element'>{{ element.data.roleModel.data.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef='licenseNumber'>
+      <th mat-header-cell *matHeaderCellDef>{{ dictionaryUtils.labels.licenseNumber }}</th>
+      <td mat-cell *matCellDef='let element'>{{ element.data.licenseNumber !== null ? element.data.licenseNumber : 'Sin licencia' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef='accessRestriction'>
+      <th mat-header-cell *matHeaderCellDef>{{ dictionaryUtils.labels.accessPermission }}</th>
+      <td mat-cell *matCellDef='let element'>
+        <section class="row center-center" *ngIf="element.data.idStatus !== 3">
+          <mat-slide-toggle [checked]="element.data.idStatus === 1" (change)="updatePermission(element)">
+          </mat-slide-toggle>
+        </section>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef='options'>
+      <th mat-header-cell *matHeaderCellDef>{{dictionaryUtils.labels.options}}</th>
+      <td mat-cell *matCellDef='let element'>
+        <button mat-icon-button matTooltipPosition="above" [matTooltip]="dictionaryUtils.actions.edit"
+          (click)='addOrEdit(element)'>
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button matTooltipPosition="above" [matTooltip]="dictionaryUtils.actions.delete"
+          (click)='deleteUser(element)'>
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button matTooltipPosition="above" [matTooltip]="dictionaryUtils.actions.resetPass" disabled="true"
+          (click)='resetPass(element)'>
+          <mat-icon>email</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef='displayedColumns'></tr>
+    <tr mat-row *matRowDef='let row; columns: displayedColumns'></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[10, 25, 50]" [length]="numberOfUsers" [pageIndex]="pageIndex" [pageSize]="pageSize"
+    [showFirstLastButtons]="true" (page)="onPageChange($event)">
+  </mat-paginator>
+</div>

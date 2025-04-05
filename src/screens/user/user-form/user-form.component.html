@@ -1,0 +1,158 @@
+@if (isLoading) {
+<mat-progress-bar mode='indeterminate'></mat-progress-bar>
+}
+
+@if (!isLoading) {
+<mat-card>
+
+    <h4 mat-dialog-title>{{ data.disabledProfile ? dictionaryUtils.actions.editProfile :
+        data.userModel !== undefined ? dictionaryUtils.actions.editUser : dictionaryUtils.actions.addUser }}</h4>
+    <mat-dialog-content>
+
+
+        <form [formGroup]='userFormGroup'>
+            <div class='column'>
+                <div class="row center-center profile-picture-container">
+                    @if (userModel !== undefined && data.disabledProfile === true) {
+
+                    }
+                    @if (isLoadingPicture) {
+                    <div class="d-flex justify-content-center">
+                        <app-loading [title]="dictionaryUtils.labels.loadingPicture"></app-loading>
+                    </div>
+                    }
+
+                    @if (!isLoadingPicture) {
+                    <div>
+                        @if (userModel.data.profilePicturePath !== null && !profilePictureChanged) {
+                        <img class="profile-picture" [src]="userModel.data.profilePicture!">
+                        }
+
+                        @if (profilePictureChanged && fileReader !== null) {
+                        <img class="profile-picture" src="{{ fileReader.result  }}">
+                        }
+
+                        @if (userModel.data.profilePicturePath === null && !profilePictureChanged) {
+                        <mat-icon class="profile-icon">account_circle</mat-icon>
+                        }
+
+                        @if(userModel !== undefined){
+                        <div fxLayout='row' fxLayoutAlign='end center'>
+                            <input #profileImg type='file' [hidden]='true' accept="image/png, image/jpeg, image/jpg"
+                                (change)='loadImg(profileImg.files)'>
+
+                            @if (authService.currentUser!.id === userModel!.id) {
+                            <button mat-mini-fab (click)='profileImg.click()'>
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            }
+                        </div>
+                        }
+                    </div>
+                    }
+                </div>
+
+                <mat-form-field appearance='outline'>
+                    <mat-label>{{ dictionaryUtils.labels.name}}</mat-label>
+                    <input matInput name='name' [maxlength]="50"
+                        oninput='value = value.replace(/[\d|°¬!<>#$%&/()=?"¡´¨+*~}`\\\]`{\^\[\-_.:,;]/g, "");'
+                        formControlName='name'>
+                    @if (nameFormControl.hasError('required')) {
+                    <mat-error>
+                        {{dictionaryUtils.labels.firstName}} <strong>{{dictionaryUtils.labels.required}}</strong>
+                    </mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-form-field appearance='outline'>
+                    <mat-label>{{ dictionaryUtils.labels.firstName }}</mat-label>
+                    <input matInput name='firstName' [maxlength]="50"
+                        oninput='value = value.replace(/[\d|°¬!<>#$%&/()=?"¡´¨+*~}`\\\]`{\^\[\-_.:,;]/g, "");'
+                        formControlName='firstName'>
+                    @if (fisrNameFormControl.hasError('required')) {
+                    <mat-error>
+                        {{dictionaryUtils.labels.firstName}} <strong>{{dictionaryUtils.labels.required}}</strong>
+                    </mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-form-field appearance='outline'>
+                    <mat-label>{{ dictionaryUtils.labels.lastName }}</mat-label>
+                    <input matInput name='lastName' [maxlength]="50"
+                        oninput='value = value.replace(/[\d|°¬!<>#$%&/()=?"¡´¨+*~}`\\\]`{\^\[\-_.:,;]/g, "");'
+                        formControlName='lastName'>
+                    @if (nameFormControl.hasError('required')) {
+                    <mat-error>
+                        {{dictionaryUtils.labels.lastName}} <strong>{{dictionaryUtils.labels.required}}</strong>
+                    </mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-form-field appearance='outline'>
+                    <mat-label>{{ dictionaryUtils.labels.licenseNumber }}</mat-label>
+                    <input matInput name='licenseNumber' [maxlength]="50"
+                        oninput='value = value.replace(/[\d|°¬!<>#$%&/()=?"¡´¨+*~}`\\\]`{\^\[\-_.:,;]/g, "");'
+                        formControlName='licenseNumber'>
+                </mat-form-field>
+
+                <mat-form-field appearance='outline'>
+                    <mat-label>{{ dictionaryUtils.labels.email }}</mat-label>
+                    <input matInput name='email' type="email" [maxlength]="50" formControlName='email'>
+                    @if (emailFormControl.hasError('required')) {
+                    <mat-error>
+                        {{dictionaryUtils.labels.email}} <strong>{{dictionaryUtils.labels.required}}</strong>
+                    </mat-error>
+                    }
+
+                    @if (emailFormControl.hasError('email')) {
+                    <mat-error>
+                        {{dictionaryUtils.labels.email}} <strong>{{dictionaryUtils.labels.invalid}}</strong>
+                    </mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-form-field appearance='outline'>
+                    <mat-label>{{ dictionaryUtils.labels.phone }}</mat-label>
+                    <input matInput name='phone' [maxlength]="10" oninput="value = value.replace(/[a-zA-Z\W_]/g, '');"
+                        formControlName='phone'>
+                    @if (phoneFormControl.hasError('required')) {
+                    <mat-error>
+                        {{dictionaryUtils.labels.email}} <strong>{{dictionaryUtils.labels.required}}</strong>
+                    </mat-error>
+                    }
+
+                    @if (phoneFormControl.hasError('email')) {
+                    <mat-error>
+                        {{dictionaryUtils.labels.email}} <strong>{{dictionaryUtils.labels.invalid}}</strong>
+                    </mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-form-field appearance='outline'>
+                    <mat-label>{{ dictionaryUtils.labels.role }}</mat-label>
+                    <mat-select matInput formControlName='idRole'>
+                        <mat-option *ngFor='let role of roles' [value]='role.id'>
+                            {{ role.data.name }}
+                        </mat-option>
+                    </mat-select>
+                    @if (roleFormControl.hasError('required')) {
+                    <mat-error>
+                        {{dictionaryUtils.labels.email}} <strong>{{dictionaryUtils.labels.required}}</strong>
+                    </mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="row space-between-center">
+        <button mat-raised-button (click)='dialogRef.close(false)' [disabled]='isLoading'>{{
+            dictionaryUtils.actions.cancel }}</button>
+        <button mat-flat-button (click)='saveOrUpdate()'
+            [disabled]='userFormGroup.invalid || isLoading'>{{
+            dictionaryUtils.actions.save }}</button>
+    </mat-dialog-actions>
+
+</mat-card>
+
+}

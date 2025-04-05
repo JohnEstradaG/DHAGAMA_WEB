@@ -1,0 +1,67 @@
+@if (isLoading) {
+<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
+@if (!isLoading) {
+<mat-drawer-container class="fill">
+    <mat-drawer #drawer >
+        <h6>{{dictionaryUtils.version}}</h6>
+        <div class="column center-center">
+            @if (authService.currentUser!.data.profilePicturePath !== null) {
+            <img class="profile-picture" [src]="authService.currentUser!.data.profilePicture">
+            }
+            @if (authService.currentUser!.data.profilePicturePath === null) {
+            <mat-icon class="profile-icon">account_circle</mat-icon>
+            }
+            <h2>{{authService.currentUser!.data.name}}</h2>
+            <h4 class="subtitle-global">{{authService.currentUser!.data.roleModel.data.name}}</h4>
+            <h4 class="subtitle-global">{{authService.currentUser!.data.email}}</h4>
+        </div>
+
+        <mat-accordion>
+            <mat-list>
+                @for (menu of navbar; track $index) {
+                <mat-list-item [routerLink]="menu.route"
+                    (click)="[drawer.close(), changeViewName()]">
+                    <mat-icon matListItemIcon>{{ menu.icon }}</mat-icon>
+                    <div matListItemTitle>{{ menu.name }}</div>
+                </mat-list-item>
+            }
+                @for (menu of navbarForms; track $index) {
+                <mat-list-item (click)="optionNavBar(menu.route)">
+                    <mat-icon matListItemIcon>{{ menu.icon }}</mat-icon>
+                    <div matListItemTitle>{{ menu.name }}</div>
+                </mat-list-item>
+                }
+            </mat-list>
+        </mat-accordion>
+    </mat-drawer>
+
+
+    <mat-drawer-content>
+        <mat-toolbar color="primary">
+            <mat-toolbar-row class="space-between-center">
+                <div class="row center-center gap-1">
+                    @if (isHome) {
+                    <button mat-icon-button (click)="drawer.toggle()">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                    }
+                    @if (!isHome) {
+                    <button mat-icon-button (click)="goBack()">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    }
+                    <h3>{{currentRouter.name }}</h3>
+                </div>
+
+                <div class="row center-center gap-1">
+                    <h3 class="title-global">{{ authService.currentUser!.data.name }} /
+                        {{authService.currentUser!.data.roleModel.data.name}}</h3>
+                    <img src="../../assets/img/logo.png" class="logo-img">
+                </div>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>
+}

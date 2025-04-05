@@ -1,11 +1,16 @@
-<div class="background-login" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem">
-  <div fxLayoutAlign="center center" fxLayout="row">
+<div class="column background-login center-center gap-1">
+  <div class="row center-center">
     <mat-card class="size-card-login">
-      <div fxLayout="column" fxLayoutGap="1rem" class="card-login">
+      <div class="column" fxLayoutGap="1rem">
         <div fxLayoutAlign="center center">
-          <h1 class="label-login">{{dictionaryUtils.labels.login}}</h1>
+          <img src="../../assets/img/logo.png" class="logo-login-style">
         </div>
-        <form [formGroup]="loginFormGroup" fxLayout="column">
+
+        <div class="center-center">
+          <h1 class="label-login">{{ dictionaryUtils.labels.login }}</h1>
+        </div>
+
+        <form [formGroup]="loginFormGroup" class="column">
           <mat-form-field appearance="outline" class="input-style">
             <mat-label>{{dictionaryUtils.labels.email}}</mat-label>
             <input matInput required name="email" type="text" formControlName="email">
@@ -33,14 +38,14 @@
             }
           </mat-form-field>
 
-          <div fxLayout="column" fxLayoutGap="1rem">
+          <div class="column" fxLayoutGap="1rem">
             <button mat-raised-button (click)="signIn()">
               {{dictionaryUtils.labels.login}}
             </button>
 
           </div>
 
-          <div fxLayoutAlign="center center">
+          <div class="center-center">
             <p class="restore-password" routerLink="/olvido-contraseña">
               {{dictionaryUtils.labels.didYouForgetYourPassword}}</p>
           </div>
@@ -48,10 +53,8 @@
       </div>
     </mat-card>
 
-    <div fxLayout="column" fxLayoutGap="1rem" class="fixed-card">
-      <div fxLayoutAlign="center center">
-        <img src="../../../assets/img/logo.png" class="logo-login-style">
-      </div>
+    <div class="column" fxLayoutGap="1rem" class="fixed-card">
+      <p >{{dictionaryUtils.version}}</p>
     </div>
   </div>
 </div>

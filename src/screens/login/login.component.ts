@@ -1,27 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Utils } from '../../utils/utils';
 import dictionaryUtils from '../../utils/dictionary.utils';
 import { FormService } from '../../services/form.service';
 import { noWhitespaceValidator } from '../../services/validators.service';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCardModule } from '@angular/material/card';
-import { MatDialogModule } from '@angular/material/dialog';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-login',
-  imports: [MatButtonModule, MatFormFieldModule, ReactiveFormsModule, MatCardModule, MatDialogModule, FormsModule, ReactiveFormsModule, HttpClientModule, MatInputModule, MatIconModule],
-  providers: [
-    HttpClient,
-    AuthService,
-  ],
   templateUrl: './login.component.html',
+  standalone: false,
 })
 export class LoginComponent implements OnInit {
 
@@ -50,7 +39,7 @@ export class LoginComponent implements OnInit {
   setAuthListener() {
     const authenticate = this.authService.isAuthenticated();
     if (authenticate === true) {
-      if (this.authService.token !== null) this.router.navigate(['/control-acceso']);;
+      if (this.authService.token !== null) this.router.navigate(['/dhagama']);;
     } else {
       this.isLoading = false;
     }
@@ -73,6 +62,6 @@ export class LoginComponent implements OnInit {
   correctLogin(token: string) {
     this.authService.setValueLocalStorage('token', token);
     this.authService.token = token;
-    this.router.navigate(['/control-acceso']);
+    this.router.navigate(['/dhagama']);
   }
 }

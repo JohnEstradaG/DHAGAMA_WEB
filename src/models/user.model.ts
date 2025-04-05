@@ -11,10 +11,10 @@ export class UserModel extends DataBaseModel {
     email: string,
     emailAlerts: number,
     name: string,
-    surname: string,
-    secondSurname: string,
+    firstName: string,
+    lastName: string,
     phone: string,
-    position: string | null,
+    licenseNumber: string | null,
     profilePicturePath: string | null
     profilePicture: ArrayBuffer  | string | null
     idRole: number,
@@ -35,10 +35,10 @@ export class UserModel extends DataBaseModel {
         email: '',
         emailAlerts: 0,
         name: '',
-        surname: '',
-        secondSurname: '',
+        firstName: '',
+        lastName: '',
         phone: '',
-        position: null,
+        licenseNumber: null,
         profilePicturePath: null,
         profilePicture: '',
         idRole: 0,
@@ -63,11 +63,11 @@ export class UserModel extends DataBaseModel {
     userModel.id = userRes.id;
     userModel.data.email = userRes.email;
     userModel.data.name = userRes.name;
-    userModel.data.surname = userRes.first_name;
-    userModel.data.secondSurname = userRes.last_name;
+    userModel.data.firstName = userRes.first_name;
+    userModel.data.lastName = userRes.last_name;
     userModel.data.phone = userRes.phone;
     userModel.data.idStatus = userRes.id_status;
-    userModel.data.position = userRes.position;
+    userModel.data.licenseNumber = userRes.license_number;
     userModel.data.idRole = userRes.id_role;
     userModel.data.roleModel.id = userRes.id_role;
     userModel.data.roleModel.data.name = userRes.role_name;

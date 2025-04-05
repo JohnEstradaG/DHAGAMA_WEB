@@ -27,29 +27,8 @@ export class Utils {
     const sidenav: RouterModel[] = [];
     switch (userModel.data.idRole) {
       case 1:
-        sidenav.push(dictionaryUtils.routes.branches);
-        sidenav.push(dictionaryUtils.routes.customers);
+        sidenav.push(dictionaryUtils.routes.users);
         break;
-
-      case 2:
-        sidenav.push(dictionaryUtils.routes.workPlaces);
-        sidenav.push(dictionaryUtils.routes.badges);
-        break;
-
-      case 3:
-        sidenav.push(dictionaryUtils.routes.accesses);
-        break;
-
-      case 5:
-        sidenav.push(dictionaryUtils.routes.dashboards);
-        sidenav.push(dictionaryUtils.routes.workPlaces);
-        sidenav.push(dictionaryUtils.routes.resportVisit);
-        break;
-
-      case 6:
-        sidenav.push(dictionaryUtils.routes.accesses);
-        break;
-
     }
     sidenav.push(this.dictionaryUtils.routes.profile);
     return sidenav;
@@ -64,29 +43,6 @@ export class Utils {
   viewNameURL(name: string): RouterModel {
     let routerModel: RouterModel = new RouterModel;
     switch (true) {
-      case name.includes(this.dictionaryUtils.routes.branches.route):
-        routerModel = this.dictionaryUtils.routes.branches;
-        break;
-
-      case name.includes(this.dictionaryUtils.routes.resportVisit.route):
-        routerModel = this.dictionaryUtils.routes.resportVisit;
-        break;
-
-      case name.includes(this.dictionaryUtils.routes.accesses.route):
-        routerModel = this.dictionaryUtils.routes.accesses;
-        break;
-
-      case name.includes(this.dictionaryUtils.routes.workPlaces.route):
-        routerModel = this.dictionaryUtils.routes.workPlaces;
-        break;
-
-      case name.includes(this.dictionaryUtils.routes.communication.route):
-        routerModel = this.dictionaryUtils.routes.communication;
-        break;
-
-      case name.includes(this.dictionaryUtils.routes.resportVisit.route):
-        routerModel = this.dictionaryUtils.routes.resportVisit;
-        break;
 
       case name.includes(this.dictionaryUtils.routes.users.route):
         routerModel = this.dictionaryUtils.routes.users;
@@ -94,21 +50,6 @@ export class Utils {
 
       case name.includes(this.dictionaryUtils.routes.profile.route):
         routerModel = this.dictionaryUtils.routes.profile;
-        break;
-
-      case name.includes(this.dictionaryUtils.routes.badges.route):
-        routerModel = this.dictionaryUtils.routes.badges;
-        break;
-
-      case name.includes(this.dictionaryUtils.routes.dashboards.route):
-        routerModel = this.dictionaryUtils.routes.dashboards;
-        break;
-
-      case name.includes(this.dictionaryUtils.routes.customers.route):
-        routerModel = this.dictionaryUtils.routes.customers;
-        break;
-
-      default:
         break;
     }
     return routerModel;

@@ -1,0 +1,59 @@
+<mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+<div *ngIf="!isLoading" class="container column gap-1 center-center">
+  <div class="row center-center">
+    <div class="column gap-1" [style]="{'width': utils.isMobileDevice() === false  ? '600px' : ''}">
+      <div class="row start-center gap-1">
+        <mat-icon>account_circle</mat-icon>
+        <h3>{{dictionaryUtils.labels.myData}}</h3>
+      </div>
+
+      <mat-card>
+        <mat-card-content class="column">
+          <div class="profile-picture-container" class='row center-center'>
+            <img *ngIf="authService.currentUser!.data.profilePicturePath !== null" class="profile-picture"
+              src="{{ authService.currentUser!.data.profilePicture }}">
+            <mat-icon class="profile-icon" *ngIf="authService.currentUser!.data.profilePicturePath === null">
+              account_circle
+            </mat-icon>
+          </div>
+
+          <div class="row space-between-center">
+            <h3>{{ dictionaryUtils.labels.name }}</h3>
+            <h4>{{ authService.currentUser!.data.name + ' ' + authService.currentUser!.data.firstName + ' ' +
+              authService.currentUser!.data.lastName }}</h4>
+          </div>
+
+          <div class="row space-between-center">
+            <h3>{{ dictionaryUtils.labels.email }}</h3>
+            <h4>{{
+              authService.currentUser!.data.email.length > 30 ?
+              authService.currentUser!.data.email.substring(0 , 30) : authService.currentUser!.data.email }}</h4>
+          </div>
+
+          <div class="row space-between-center">
+            <h3>{{ dictionaryUtils.labels.licenseNumber }}</h3>
+            <h4>{{authService.currentUser!.data.licenseNumber !== null ? authService.currentUser!.data.licenseNumber : 'Sin licencia' }}
+            </h4>
+          </div>
+
+          <div class="row space-between-center">
+            <h3>{{ dictionaryUtils.labels.phone }}</h3>
+            <h4>{{ authService.currentUser!.data.phone }}
+            </h4>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions class="row space-between-center gap-1">
+          <button mat-raised-button color="warn" (click)="forgotPassword()">
+            {{ dictionaryUtils.actions.restorePassword }}
+          </button>
+
+          <button mat-flat-button (click)="editProfile()">
+            {{ dictionaryUtils.actions.editProfile }}
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+    </div>
+  </div>
+</div>
